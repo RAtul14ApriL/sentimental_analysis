@@ -23,30 +23,32 @@ submissions=praw.models.Submission
 
 reddit_posts=pd.DataFrame()
 
-titles=[]
-ids=[]
-ups=[]
-downs=[]
-upvote_ratio=[]
-posted_on=[]
-num_comments=[]
+post_obj={
+  "titles":[],
+  "ids":[],
+  "ups":[],
+  "downs":[],
+  "upvote_ratio":[],
+  "posted_on":[],
+  "num_comments":[]
+}
 
 
 for submission in reddit.subreddit("all").search("artificial intelligence"):
-  titles.append(submission.title)
-  ids.append(submission.id)
-  ups.append(submission.ups)
-  downs.append(submission.downs)
-  posted_on.append(date.fromtimestamp(submission.created_utc))
-  upvote_ratio.append(submission.upvote_ratio)
+  post_obj['titles'].append(submission.title)
+  post_obj['ids'].append(submission.id)
+  post_obj['ups'].append(submission.ups)
+  post_obj['downs'].append(submission.downs)
+  post_obj['posted_on'].append(date.fromtimestamp(submission.created_utc))
+  post_obj['upvote_ratio'].append(submission.upvote_ratio)
 
 
-reddit_posts['title'] = titles
-reddit_posts['id'] = ids
-reddit_posts['upvotes']=ups
-reddit_posts['downs']=downs
-reddit_posts['upvote_ratio']=upvote_ratio
-reddit_posts['posted_on']=posted_on
+reddit_posts['title'] =post_obj['titles']
+reddit_posts['id'] =post_obj['ids']
+reddit_posts['upvotes']=post_obj['ups']
+reddit_posts['downs']=post_obj['downs']
+reddit_posts['upvote_ratio']=post_obj['upvote_ratio']
+reddit_posts['posted_on']=post_obj['posted_on']
 
 reddit_posts.to_csv('reddit_posts.csv')
 
@@ -56,7 +58,7 @@ all_posts=[]
 comments=[]
 comment_ids=[]
 
-for id in ids:
+for id in post_obj['ids']:
   posts = reddit.submission(id=id)
   all_posts.append(posts)
 
