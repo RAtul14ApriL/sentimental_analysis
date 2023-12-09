@@ -44,6 +44,7 @@ regex==2023.10.3
 requests==2.31.0
 six==1.16.0
 stack-data==0.6.3
+textblob==0.17.1
 tornado==6.4
 tqdm==4.66.1
 traitlets==5.14.0
