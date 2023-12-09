@@ -52,8 +52,9 @@ post_obj={
 }
 
 reddit_comments=pd.DataFrame()
+search_query=input("Enter search query: ")
 
-for submission in reddit.subreddit("all").search("artificial intelligence"):
+for submission in reddit.subreddit("all").search(search_query if search_query else "artificial intelligence"):
   post_obj['titles'].append(str(submission.title).strip().replace(',',' '))
   post_obj['ids'].append(submission.id)
   post_obj['ups'].append(submission.ups)
@@ -87,5 +88,5 @@ for i in list(comments_objs.keys()):
   reddit_comments[i]=comments_objs[i]
 
 print("Time taken to extract data: ",time.time()-starttime," seconds")
-reddit_posts.to_csv('reddit_posts.csv')
-reddit_comments.to_csv('reddit_comments.csv')
+reddit_posts.to_csv(f'reddit_posts-{search_query.replace(" ","_")}.csv')
+reddit_comments.to_csv(f'reddit_comments-{search_query.replace(" ","_")}.csv')
